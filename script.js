@@ -12,7 +12,7 @@ class WalletManager {
     // Inicializa o aplicativo
     init() {
         this.setupEventListeners();
-        this.checkWalletConnection();
+        // Removido checkWalletConnection() para sempre aparecer como primeira vez
         this.detectAccountChanges();
     }
 
@@ -53,7 +53,7 @@ class WalletManager {
         }
     }
 
-    // Conecta com a carteira
+    // Conecta/Seleciona conta na carteira (sempre força autenticação)
     async connectWallet() {
         try {
             this.showStatus('Verificando carteiras disponíveis...', 'info');
@@ -68,15 +68,16 @@ class WalletManager {
                 return;
             }
 
-            this.showStatus('Abrindo MetaMask para seleção de conta...', 'info');
+            this.showStatus('Abrindo MetaMask para conectar conta... Insira sua senha se solicitada.', 'info');
 
-            // Solicita permissões explícitas - isso força o usuário a confirmar a conta no MetaMask
+            // SEMPRE força o usuário a selecionar/autenticar a conta no MetaMask
+            // Isto garante que o usuário tenha que inserir a senha e confirmar a conta
             await window.ethereum.request({
                 method: 'wallet_requestPermissions',
                 params: [{ eth_accounts: {} }]
             });
 
-            this.showStatus('Obtendo dados da conta selecionada...', 'info');
+            this.showStatus('Obtendo dados da conta conectada...', 'info');
 
             // Após confirmação, obtém as contas autorizadas
             const accounts = await window.ethereum.request({
@@ -88,7 +89,7 @@ class WalletManager {
                 this.isConnected = true;
                 this.web3Provider = window.ethereum;
 
-                this.showStatus('Login realizado com sucesso!', 'success');
+                this.showStatus('Conta conectada com sucesso!', 'success');
                 
                 // Carrega informações da carteira
                 await this.loadWalletInfo();
@@ -97,22 +98,22 @@ class WalletManager {
                 // Atualiza interface
                 this.updateConnectedInterface();
                 
-                // Log para desenvolvimento - útil para debug
-                console.log('✅ Login realizado com conta:', this.currentAccount);
+                // Log para desenvolvimento
+                console.log('✅ Conta conectada:', this.currentAccount);
                 console.log('🌐 Rede atual:', await this.getCurrentNetwork());
             } else {
-                this.showStatus('Nenhuma conta foi selecionada.', 'warning');
+                this.showStatus('Nenhuma conta foi conectada.', 'warning');
             }
 
         } catch (error) {
-            console.error('Erro ao conectar carteira:', error);
+            console.error('Erro ao conectar conta:', error);
             
             if (error.code === 4001) {
                 this.showStatus('Conexão cancelada pelo usuário.', 'warning');
             } else if (error.code === -32002) {
                 this.showStatus('Já existe uma solicitação pendente no MetaMask. Verifique a extensão.', 'info');
             } else {
-                this.showStatus('Erro ao conectar com a carteira. Tente novamente.', 'danger');
+                this.showStatus('Erro ao conectar conta. Tente novamente.', 'danger');
             }
         }
     }
@@ -130,7 +131,7 @@ class WalletManager {
 
         // Restaura estado inicial
         const connectBtn = document.getElementById('connectWallet');
-        connectBtn.innerHTML = '<i class="bi bi-link-45deg"></i> Conectar Carteira';
+        connectBtn.innerHTML = '<i class="bi bi-link-45deg"></i> Conectar Conta';
         connectBtn.disabled = false;
 
         this.showStatus('Carteira desconectada.', 'info');
@@ -224,47 +225,39 @@ class WalletManager {
     // Atualiza interface quando conectado
     updateConnectedInterface() {
         const connectBtn = document.getElementById('connectWallet');
-        connectBtn.innerHTML = '<i class="bi bi-check-circle"></i> Conectado';
-        connectBtn.disabled = true;
+        connectBtn.innerHTML = '<i class="bi bi-arrow-repeat"></i> Alterar Conta';
+        connectBtn.disabled = false; // Permite trocar de conta mesmo quando conectado
     }
 
-    // Verifica conexão existente
+    // Verifica se carteira está disponível (não conecta automaticamente)
     async checkWalletConnection() {
-        if (typeof window.ethereum !== 'undefined') {
-            try {
-                const accounts = await window.ethereum.request({ method: 'eth_accounts' });
-                if (accounts.length > 0) {
-                    this.currentAccount = accounts[0];
-                    this.isConnected = true;
-                    this.web3Provider = window.ethereum;
-                    
-                    await this.loadWalletInfo();
-                    this.showWalletInfo();
-                    this.updateConnectedInterface();
-                }
-            } catch (error) {
-                console.error('Erro ao verificar conexão:', error);
-            }
-        }
+        // Esta função agora apenas verifica se a carteira está disponível
+        // Não conecta automaticamente para sempre aparecer como primeira vez
+        return typeof window.ethereum !== 'undefined';
     }
 
     // Detecta mudanças de conta
     detectAccountChanges() {
         if (typeof window.ethereum !== 'undefined') {
             window.ethereum.on('accountsChanged', (accounts) => {
-                if (accounts.length > 0) {
+                // Só atualiza os dados se o usuário já tiver conectado explicitamente
+                if (this.isConnected && accounts.length > 0) {
                     this.currentAccount = accounts[0];
                     this.loadWalletInfo();
                     this.showStatus('Conta alterada automaticamente!', 'info');
-                } else {
+                } else if (this.isConnected && accounts.length === 0) {
+                    // Se estava conectado e agora não há contas, desconecta
                     this.disconnectWallet();
                 }
             });
 
             window.ethereum.on('chainChanged', (chainId) => {
-                this.loadWalletInfo();
-                const networkName = this.getNetworkName(chainId);
-                this.showStatus(`Rede alterada para: ${networkName}`, 'info');
+                // Só atualiza se já estiver conectado
+                if (this.isConnected) {
+                    this.loadWalletInfo();
+                    const networkName = this.getNetworkName(chainId);
+                    this.showStatus(`Rede alterada para: ${networkName}`, 'info');
+                }
             });
         }
     }
