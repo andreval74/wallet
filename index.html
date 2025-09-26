@@ -1,21 +1,16 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerenciador de Carteira Crypto</title>
-    
-    <!-- Bootstrap CSS -->
+    <title>Gerenciador de Carteira Crypto (Web3Modal)</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    
-    <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
-    
-    <!-- CSS Personalizado -->
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    <!-- Header -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container">
             <a class="navbar-brand" href="#">
@@ -24,59 +19,52 @@
             </a>
         </div>
     </nav>
-
-    <!-- Main Content -->
-    <div class="container mt-5">
-        
-        <!-- Welcome Section -->
-        <div class="row justify-content-center mb-5">
-            <div class="col-lg-8 text-center">
-                <h1 class="display-4 mb-4">Bem-vindo ao seu Gerenciador de Carteira</h1>
-                <p class="lead text-muted">Conecte sua carteira de criptomoedas de forma simples e segura para acessar informações detalhadas sobre suas contas.</p>
+    <div class="container py-5">
+        <div class="row justify-content-center mb-4">
+            <div class="col-lg-8 col-md-10 text-center">
+                <h1 class="display-5 mb-3">Bem-vindo ao seu Gerenciador de Carteira</h1>
+                <p class="lead text-muted">Conecte sua carteira de criptomoedas de forma simples e segura para acessar
+                    informações detalhadas sobre suas contas.</p>
             </div>
         </div>
-
-        <!-- Connection Section -->
-        <div class="row justify-content-center">
-            <div class="col-lg-6">
-                <div class="card shadow-lg">
-                    <div class="card-body p-5">
+        <div class="row justify-content-center mb-4">
+            <div class="col-lg-6 col-md-8">
+                <div class="card shadow-lg border-0">
+                    <div class="card-body p-4">
                         <div class="text-center mb-4">
                             <div class="wallet-icon mb-3">
-                                <i class="bi bi-wallet-fill"></i>
+                                <i class="bi bi-wallet-fill" style="font-size:2.5rem;"></i>
                             </div>
-                            <h3>Conectar Conta da Carteira</h3>
-                            <p class="text-muted">Clique no botão abaixo para conectar e autenticar sua conta no MetaMask</p>
+                            <h3 class="mb-2">Conectar Conta da Carteira</h3>
+                            <p class="text-muted mb-0">Clique no botão abaixo para conectar e autenticar sua conta em
+                                qualquer carteira suportada</p>
                         </div>
-
-                        <!-- Connection Status -->
                         <div id="connectionStatus" class="alert alert-info d-none" role="alert">
                             <i class="bi bi-info-circle"></i>
                             <span id="statusMessage">Verificando carteiras disponíveis...</span>
                         </div>
-
-                        <!-- Connect Button -->
-                        <div class="d-grid gap-2">
+                        <div class="d-grid gap-2 my-3">
                             <button id="connectWallet" class="btn btn-primary btn-lg">
                                 <i class="bi bi-link-45deg"></i>
                                 Conectar Conta
                             </button>
                         </div>
-
-                        <!-- Supported Wallets -->
-                        <div class="mt-4">
-                            <small class="text-muted d-block text-center mb-3">Carteiras suportadas:</small>
-                            <div class="d-flex justify-content-center gap-3">
-                                <div class="wallet-support">
-                                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTI2IDI2SDZWNkg1VjI3SDE2SDI3VjI2WiIgZmlsbD0iIzc2NzY3NiIvPgo8L3N2Zz4K" alt="MetaMask" title="MetaMask">
+                        <div class="mt-3">
+                            <small class="text-muted d-block text-center mb-2">Carteiras suportadas:</small>
+                            <div class="d-flex justify-content-center gap-4">
+                                <div class="wallet-support text-center">
+                                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTI2IDI2SDZWNkg1VjI3SDE2SDI3VjI2WiIgZmlsbD0iIzc2NzY3NiIvPgo8L3N2Zz4K"
+                                        alt="MetaMask" title="MetaMask" style="width:32px;height:32px;">
                                     <small>MetaMask</small>
                                 </div>
-                                <div class="wallet-support">
-                                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTI2IDI2SDZWNkg1VjI3SDE2SDI3VjI2WiIgZmlsbD0iIzc2NzY3NiIvPgo8L3N2Zz4K" alt="WalletConnect" title="WalletConnect">
+                                <div class="wallet-support text-center">
+                                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTI2IDI2SDZWNkg1VjI3SDE2SDI3VjI2WiIgZmlsbD0iIzc2NzY3NiIvPgo8L3N2Zz4K"
+                                        alt="WalletConnect" title="WalletConnect" style="width:32px;height:32px;">
                                     <small>WalletConnect</small>
                                 </div>
-                                <div class="wallet-support">
-                                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTI2IDI2SDZWNkg1VjI3SDE2SDI3VjI2WiIgZmlsbD0iIzc2NzY3NiIvPgo8L3N2Zz4K" alt="Outras" title="Outras carteiras">
+                                <div class="wallet-support text-center">
+                                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTI2IDI2SDZWNkg1VjI3SDE2SDI3VjI2WiIgZmlsbD0iIzc2NzY3NiIvPgo8L3N2Zz4K"
+                                        alt="Outras" title="Outras carteiras" style="width:32px;height:32px;">
                                     <small>Outras</small>
                                 </div>
                             </div>
@@ -85,102 +73,46 @@
                 </div>
             </div>
         </div>
-
-        <!-- Wallet Info Section (Hidden initially) -->
-        <div id="walletInfo" class="row mt-5 d-none">
-            <div class="col-12">
-                <div class="card shadow">
-                    <div class="card-header bg-success text-white">
+        <div id="walletInfo" class="row justify-content-center mt-5 d-none">
+            <div class="col-lg-6 col-md-8">
+                <div class="card shadow border-0">
+                    <div class="card-header bg-success text-white text-center">
                         <h4 class="mb-0">
                             <i class="bi bi-check-circle"></i>
                             Carteira Conectada
                         </h4>
                     </div>
                     <div class="card-body">
-                        <div class="row">
-                            <!-- Account Info -->
-                            <div class="col-md-6">
-                                <div class="info-section">
-                                    <h5><i class="bi bi-person-circle"></i> Informações da Conta</h5>
-                                    <div class="info-item">
-                                        <strong>Endereço:</strong>
-                                        <span id="walletAddress" class="font-monospace">-</span>
-                                        <button class="btn btn-sm btn-outline-secondary ms-2" onclick="copyAddress()">
-                                            <i class="bi bi-copy"></i>
-                                        </button>
-                                    </div>
-                                    <div class="info-item">
-                                        <strong>Rede:</strong>
-                                        <span id="networkName">-</span>
-                                    </div>
-                                    <div class="info-item">
-                                        <strong>Saldo ETH:</strong>
-                                        <span id="ethBalance">-</span>
-                                    </div>
-                                </div>
+                        <div class="info-section">
+                            <h5 class="mb-3"><i class="bi bi-person-circle"></i> Informações da Conta</h5>
+                            <div class="info-item mb-2">
+                                <strong>Endereço:</strong>
+                                <span id="walletAddress" class="font-monospace"></span>
+                                <button class="btn btn-sm btn-outline-secondary ms-2" id="copyAddressBtn">
+                                    <i class="bi bi-copy"></i>
+                                </button>
                             </div>
-
-                            <!-- Account Switcher -->
-                            <div class="col-md-6">
-                                <div class="info-section">
-                                    <h5><i class="bi bi-arrow-repeat"></i> Trocar Conta</h5>
-                                    <p class="text-muted small">Se você alterar a conta no MetaMask, ela será automaticamente atualizada aqui.</p>
-                                    <button class="btn btn-outline-primary" onclick="requestAccountChange()">
-                                        <i class="bi bi-arrow-clockwise"></i>
-                                        Atualizar Conta
-                                    </button>
-                                </div>
+                            <div class="info-item mb-2">
+                                <strong>Rede:</strong>
+                                <span id="networkName"></span>
+                            </div>
+                            <div class="info-item mb-2">
+                                <strong>Saldo ETH:</strong>
+                                <span id="ethBalance"></span>
+                            </div>
+                            <div class="mt-4 text-center">
+                                <button id="disconnectWallet" class="btn btn-outline-danger">
+                                    <i class="bi bi-x-circle"></i>
+                                    Desconectar Carteira
+                                </button>
                             </div>
                         </div>
-
-                        <!-- Disconnect Button -->
-                        <div class="mt-4 text-center">
-                            <button id="disconnectWallet" class="btn btn-outline-danger">
-                                <i class="bi bi-x-circle"></i>
-                                Desconectar Carteira
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Additional Features -->
-        <div id="extraFeatures" class="row mt-4 d-none">
-            <div class="col-md-4">
-                <div class="card h-100">
-                    <div class="card-body text-center">
-                        <i class="bi bi-graph-up feature-icon"></i>
-                        <h5>Histórico de Transações</h5>
-                        <p class="text-muted">Visualize suas últimas transações</p>
-                        <button class="btn btn-outline-primary" onclick="loadTransactions()">Ver Histórico</button>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card h-100">
-                    <div class="card-body text-center">
-                        <i class="bi bi-coin feature-icon"></i>
-                        <h5>Tokens</h5>
-                        <p class="text-muted">Visualize seus tokens ERC-20</p>
-                        <button class="btn btn-outline-primary" onclick="loadTokens()">Ver Tokens</button>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card h-100">
-                    <div class="card-body text-center">
-                        <i class="bi bi-shield-check feature-icon"></i>
-                        <h5>Segurança</h5>
-                        <p class="text-muted">Informações de segurança da conta</p>
-                        <button class="btn btn-outline-primary" onclick="checkSecurity()">Verificar</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Footer -->
     <footer class="mt-5 py-4 bg-light">
         <div class="container text-center">
             <p class="text-muted mb-0">
@@ -190,10 +122,11 @@
         </div>
     </footer>
 
-    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <!-- Custom JS -->
+    <script src="https://unpkg.com/web3modal@1.9.12/dist/index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
     <script src="script.js"></script>
+    
 </body>
+
 </html>
